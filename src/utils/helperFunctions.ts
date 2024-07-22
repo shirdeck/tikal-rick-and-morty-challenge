@@ -15,7 +15,11 @@ export const aggregateEpisodeData = (characters: Character[]): Record<string, nu
 // Finds the least popular character
 export const findLeastPopularCharacter = (characters: Character[]): Character => {
   characters.sort((a, b) => a.episode.length - b.episode.length || a.name.localeCompare(b.name));
-  return characters[0];
+  const minEpisodeCount = characters[0].episode.length;
+  return characters
+    .filter(character => character.episode.length === minEpisodeCount)
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .pop() as Character;
 };
 
 // Toggles between tasks divs
